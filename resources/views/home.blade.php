@@ -1,4 +1,23 @@
-<h1>Family Root Tree Application</h1>
-<h3>Dear Developers</h3>
-<p>The development of the family tree database is under the development and will be uploaded soon.</p>
-<p>Any contributers to this projet is welcome.</p>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Dashboard</div>
+
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    You are logged in!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
