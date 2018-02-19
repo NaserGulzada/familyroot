@@ -12,6 +12,10 @@
              <label>URL:</label>
            </dl>
            <dl class="dl-horizontal">
+             <label>Slug:</label>
+             <p>{{ $post->slug }}
+           </dl>
+           <dl class="dl-horizontal">
                 <label>Created At:</label>
                 <p>{{ $post->created_at }}</p>
             </dl>

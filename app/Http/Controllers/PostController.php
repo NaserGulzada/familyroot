@@ -42,11 +42,13 @@ class PostController extends Controller
         //validate form input
         $this->validate($request, array(
             'title' => 'required|max:150',
+            'slug'  => 'required|max:150|alpha_dash|unique:posts,slug',
             'body'  => 'required'
         ));
         //save into the database
         $post = new Post;
         $post->title = $request->title;
+        $post->slug = $request->slug;
         $post->body = $request->body;
         $post->save();
         //reddirect to the view function
@@ -90,13 +92,27 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array(
-           'title' => 'required|max:150',
-           'body'  => 'required'
-        ));
+        $post = Post::find($id);
+        if($request->input('slug') == $post->slug)
+        {
+            $this->validate($request, array(
+                'title' => 'required|max:150',
+                'body'  => 'required'
+             ));   
+        }
+        else
+        {
+            $this->validate($request, array(
+                'title' => 'required|max:150',
+                'slug'  => 'required|max:150|alpha_dash|unique:posts,slug',
+                'body'  => 'required'
+             ));
+        }
+        
         $post = Post::findOrFail($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->slug = $request->input('slug');
         $post->save();
         //set flush message
         Session::flash('success','The post updated successfully.');
