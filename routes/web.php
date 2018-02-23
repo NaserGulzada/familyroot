@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,9 +9,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/','PagesController@getIndex');
 Route::get('/about','PagesController@getAbout');
+Route::get('/blog/{slug}',['as'=>'blog.single','uses'=>'BlogController@getSingle'])->where('slug','[\w\d\-\_]+');
+Route::get('/blog',['as'=>'blog.index','uses'=>'BlogController@getIndex']);
 Route::get('/contact','PagesController@getContact');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

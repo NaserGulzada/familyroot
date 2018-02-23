@@ -10,6 +10,14 @@ use Session;
 class PostController extends Controller
 {
     /**
+    * @desc: construction method to check if user is valid
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

@@ -14,22 +14,40 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact us</a></li>
+          <li class="{{ Request::is('/') ? "active":"" }}"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+          <li class="{{ Request::is('about') ? "active":"" }}"><a href="/about">About</a></li>
+          <li class="{{ Request::is('blog') ? "active":"" }}"><a href="/blog">Blogs</a></li>
+          <li class="{{ Request::is('contact') ? "active":"" }}"><a href="/contact">Contact us</a></li>
+          @if (Auth::check())
+            <li class="{{ Request::is('posts') ? "active":"" }}"><a href="/posts">Posts</a></li>
+          @endif
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Link</a></li>
+          @guest
+          <li><a href="{{ route('login') }}">Login</a></li>
+          <li><a href="{{ route('register') }}">Register</a></li>
+          @else
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              {{ Auth::user()->name }} <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
+              <li><a href="/posts">Posts</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
+              <li>
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                  Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+                </form>
+              </li>
+
             </ul>
           </li>
+            @endguest
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

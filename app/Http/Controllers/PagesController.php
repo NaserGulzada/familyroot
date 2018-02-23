@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Post;
 class PagesController extends Controller
 {
     //pages controller to display pages
     public function getIndex()
-    {
-        $data = array('title'=>'Page Title (Welcome Page)');
-        return view('pages.welcome')->with('data',$data);
+    {    
+        //get records from databse and send to welcome page
+        $posts = Post::orderBy('created_at','desc')->limit(4)->get();
+        $obj = $posts;
+        return view('pages.welcome')->withPosts($posts);
     }
     //about us
     public function getAbout()
