@@ -6,14 +6,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Repositories\PostInterface;
 use Session;
 class PostController extends Controller
 {
+    protected $post;
     /**
     * @desc: construction method to check if user is valid
      */
-    public function __construct()
+    public function __construct(PostInterface $post)
     {
+        $this->post = $post;
         $this->middleware('auth');
     }
 
@@ -24,7 +27,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at','desc')->paginate(5);
+        //providing custom functions in post repository and calling by interface
+        //$posts = $this->post->getAll();
+        $posts = $this->post->getWithPaginate(5);
+        //dd($posts);
+        //$posts = Post::orderBy('created_at','desc')->paginate(5);
         return view('posts.index')->withPosts($posts);
     }
 
