@@ -13,7 +13,7 @@
     <div class="col-md-8">
         <div class="post">
             <h3>{{ $post->title }}</h3>
-            <p>{{ substr(strip_tags($post->body),0,50) }} {{(strlen($post->body)>50)?"...":"" }}</p>
+            <p>{{ substr(strip_tags($post->body),0,200) }} {{(strlen($post->body)>200)?"...":"" }}</p>
             <a href="{{ url('blog/'.$post->slug) }}" class="btn btn-primary">Read More</a>
         </div>
         <hr />

@@ -11,7 +11,8 @@ class PagesController extends Controller
     {    
         //get records from databse and send to welcome page
         $posts = Post::orderBy('created_at','desc')->limit(4)->get();
-        $obj = $posts;
+        //dd($posts);
+        //dd(debug_backtrace());
         return view('pages.welcome')->withPosts($posts);
     }
     //about us
